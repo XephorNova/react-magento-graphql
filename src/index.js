@@ -2,31 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql, HttpLink, createHttpLink } from '@apollo/client';
+import { createClient, Provider } from 'urql';
 import reportWebVitals from './reportWebVitals';
 
-const client = new ApolloClient({
+const client = createClient({
   // uri: 'https://flyby-gateway.herokuapp.com/',
   // uri: '',
-  link: new createHttpLink({
-    uri: 'https://magentopractice.m2dev.invanos.net/kagento/graphql',
-    // uri: 'https://flyby-gateway.herokuapp.com/',
-    fetchOptions: {
-      'Accept-Control-Allow-Origin': "*"
-    }
-  }),
-  cache: new InMemoryCache(),
-  // fetchOptions: {
-  //   mode: 'no-cors'
-  // }
+  url: 'https://magentopractice.m2dev.invanos.net/kagento/graphql',
+  // link: new createHttpLink({
+  //   uri: 'https://magentopractice.m2dev.invanos.net/kagento/graphql',
+  //   // uri: 'https://flyby-gateway.herokuapp.com/',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // })
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
+    <Provider value={client}>
       <App />
-    </ApolloProvider>
+    </Provider>
   </React.StrictMode>
 );
 
